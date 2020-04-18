@@ -13,11 +13,12 @@ let base = {
             message: b
         })
     },
-    Noti(a, msg) {
+    noti(a, msg) {
         a.$notify({
             title: "系统提示",
             message: msg,
-            type: "success"
+            type: "success",
+            duration:2000
         });
     },
     // 设置标题
