@@ -18,7 +18,7 @@ let base = {
             title: "系统提示",
             message: msg,
             type: "success",
-            duration:2000
+            duration: 2000
         });
     },
     // 设置标题
@@ -93,6 +93,39 @@ let base = {
         var e = new RegExp(center, "g");
         phone = phone.toString().replace(e, '****')
         return phone
+    },
+    //obj arr 对象的克隆（区分于指针赋值）
+    copyObj(obj) {
+        var copyObj = function (obj) {
+            if (obj.constructor == Array) {
+                var a = [];
+                for (var i in obj) {
+                    a.push(obj[i]);
+                }
+                return a;
+            } else {
+                var o = {}
+                for (var i in obj) {
+                    o[i] = obj[i];
+                }
+                return o;
+            }
+
+        }
+    },
+    // 按某个属性值 去重数组对象
+    replace(arr1, name) {
+        let arr = arr1
+        for (let i = 0; i < arr.length; i++) {
+            let s = arr[i].name.replace(/\s/g, "");
+            for (let j = i + 1; j < arr.length - i; j++) {
+                let e = arr[j].name.trim(/\s/, "");
+                if (s == e) {
+                    arr.splice(j, 1);
+                }
+            }
+        }
+        return arr
     }
 }
 export default base

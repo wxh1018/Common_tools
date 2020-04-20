@@ -1,5 +1,20 @@
+//使用说明
+// 饼状图调用：this.echar.bing(myChart, this.pro_type, "项目占比", "项目类型数量占比");
+// 柱状图调用： let obj = {
+//     dom: myChart,
+//     datax: x,
+//     value: y,
+//     x_text: "项目类型",
+//     y_text: "项目总金额",
+//     title: "项目类型总金额占比",
+//     max: 10000,
+//     min: 0
+//   };
+//   this.echar.zhu(obj);
+
 const echarts = {
-    bing(dom, data, tip, title) {
+    bing(dom, data, tip, title, radius) {
+        radius = radius || '50%'
         dom.setOption({
             title: {
                 text: title,
@@ -17,11 +32,11 @@ const echarts = {
             },
             tooltip: {
                 trigger: "item",
-                formatter: "{a} <br/>{b} : {c} 个(占比{d}%)"
+                formatter: "{a} <br/>{b}:{c}个(占比{d}%)"
             },
             series: [
                 {
-                    radius: "50%",
+                    radius: radius,
                     name: tip,
                     type: "pie",
                     data,
@@ -40,6 +55,7 @@ const echarts = {
         });
     },
     zhu(obj) {
+        let max = obj.max || 10
         var option = {
             title: {
                 text: obj.title,
@@ -50,7 +66,7 @@ const echarts = {
                 }
             },
             grid: {
-                bottom: "15%",
+                bottom: "20%",
                 right: "10%"
             },
             tooltip: {
@@ -68,7 +84,7 @@ const echarts = {
             },
             xAxis: {
                 type: "category",
-                data: obj.datax.slice(0,10),
+                data: obj.datax.slice(0, 10),
                 name: obj.x_text,
                 axisLabel: {
                     show: true,
@@ -77,8 +93,8 @@ const echarts = {
                         fontSize: 14
                     },
                     formatter: function (param) {
-                        if (param.length > 10) {
-                            param.slice(0, 10) + "...";
+                        if (param.length > 3) {
+                            param = param.slice(0, 3) + "...";
                         }
                         return param.split("").join("\n");
                     }
@@ -94,9 +110,9 @@ const echarts = {
             },
             yAxis: {
                 type: "value",
-                name: obj.y_text.slice(0,10),
-                max: 10,
-                min: 0,
+                name: obj.y_text.slice(0, 10),
+                // max,
+                // min: 0,
                 axisLabel: {
                     show: true,
                     textStyle: {
@@ -130,7 +146,8 @@ const echarts = {
                         normal: {
                             color: function (params) {
                                 var colorList = ['rgb(255, 2, 2)', 'rgb(255, 2, 2,.9)', 'rgb(255, 2, .8)', 'rgb(255, 2, 2,.7)', 'rgb(255, 2, 2,.6)', 'rgb(255, 2, 2,.5)', 'rgb(255, 2, 2,.4)', 'rgb(255, 2, 2,.3)', 'rgb(255, 2, 2,.2)', 'rgb(255, 2, 2,.2)',];
-                                return colorList[params.dataIndex]
+                                // return colorList[params.dataIndex]
+                                return 'skyblue'
                             }
                         }
                     },
@@ -160,6 +177,9 @@ const echarts = {
                 }
             ]
         };
+        if (max == 10) {
+            option.yAxis.max = 10
+        }
         obj.dom.setOption(option);
     }
 }
