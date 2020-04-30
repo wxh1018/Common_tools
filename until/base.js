@@ -48,7 +48,9 @@ let base = {
         return data.slice(start, end)
     },
     //获取时间
-    GetTime() {
+    GetTime(type, type1) {
+        type = type || 'date'
+        type1 = type1 || '1'
         var year = new Date().getFullYear()
         var month = new Date().getMonth() + 1
         var date = new Date().getDate()
@@ -60,9 +62,19 @@ let base = {
         m = m < 10 ? ("0" + m) : m;
         var s = new Date().getSeconds();
         s = s < 10 ? ("0" + s) : s;
-        let time = `${year}-${month}-${date}`
-        console.log(time, h, m, s);
-        return time
+        let day = `${year}-${month}-${date}`
+        let mon = `${year}-${month}`
+        let hour = `${year}-${month}-${date}-${h}`
+        let min = `${year}年${month}月${date}号${h}点${m}分`
+        if (type == 'month') {
+            return mon
+        } else if (type == 'date') {
+            return day
+        } else if (type == 'hour') {
+            return hour
+        } else if (type == 'min') {
+            return min
+        }
     },
     //对象转数组
     Obj_arr(obj) {
