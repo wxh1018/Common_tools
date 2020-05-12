@@ -23,6 +23,7 @@ class Failtip {
     suc_type() {
         let st = this.el.style
         st.background = 'rgb(103, 194, 58,.7)'
+        
         st.color = 'white'
         st.fontWeight = 900
     }
