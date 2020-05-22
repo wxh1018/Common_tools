@@ -22,8 +22,10 @@ class Failtip {
     }
     suc_type() {
         let st = this.el.style
-        st.background = '#2becdc'
+        st.background = 'rgb(103, 194, 58,.7)'
+        
         st.color = 'white'
+        st.fontWeight = 900
     }
     error_type() {
         let st = this.el.style
@@ -45,16 +47,20 @@ class Failtip {
         el.innerHTML = this.msg
     }
     down() {
-        this.el.style.top = '-60px'
+        this.el.style.top = '-100px'
         var distance = 20
         var timer = null
         timer = setInterval(() => {
-            this.opa += .1
+            this.opa += .15
             this.el.style.opacity = this.opa
             let top = this.el.offsetTop
-            distance -= .5
+            distance -= .005
             this.el.style.top = top + distance + 'px'
-            if (this.el.offsetTop > 80) {
+            // if (this.el.offsetTop > 80) {
+            //     clearInterval(timer)
+            //     this.up()
+            // }
+            if (this.opa >= 1) {
                 clearInterval(timer)
                 this.up()
             }

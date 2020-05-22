@@ -1,13 +1,12 @@
-//错误提示
-// master
 class Failtip {
     constructor(obj, type) {
+        console.log(obj);
         var body = document.querySelector('body')
         let wrap = document.createElement('div')
         wrap.id = 'fail_tip'
         body.appendChild(wrap)
         this.el = wrap
-        this.msg = obj.msg
+        this.msg = obj.msg || '请输入内容'
         this.top = 500 //距离顶部的位置
         this.opa = 0 //透明度
         this.st = this.el.style
@@ -23,7 +22,6 @@ class Failtip {
     suc_type() {
         let st = this.el.style
         st.background = 'rgb(103, 194, 58,.7)'
-        
         st.color = 'white'
         st.fontWeight = 900
     }
@@ -44,6 +42,7 @@ class Failtip {
         this.st.textAlign = 'center'
         this.st.lineHeight = '50px'
         this.st.color = 'red'
+        this.st.zIndex = '9999999999'
         el.innerHTML = this.msg
     }
     down() {
@@ -77,7 +76,7 @@ class Failtip {
                 }
                 return 1
             }, 50)
-        }, 2000)
+        }, 3000)
     }
 }
 

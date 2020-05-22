@@ -15,7 +15,7 @@
 //         }
 //     }
 // }
-var parseCookies = function(query) {
+var parseCookies = function (query) {
 	var reg = /([^=; \s]+)[=\s]*([^; \s]*)/g;
 	var obj = {};
 	while (reg.exec(query)) {
@@ -25,18 +25,32 @@ var parseCookies = function(query) {
 	return obj;
 }
 //CRUD 
-function setCookie(k,v,d){
+function setCookie(k, v, d) {
 	let date = new Date()
-	date.setDate(date.getDate()+d)
+	date.setDate(date.getDate() + d)
 	let cookie = `${k}=${v};expires=${date};path=/`
 	document.cookie = cookie;
 }
-function getCookie(k){
+function getCookie(k) {
 	//k=bbb
 	let obj = parseCookies(document.cookie)
 	console.log(obj)
 	return obj[k];
 }
-function removeCookie(k){
-	setCookie(k,'',-10)
+function removeCookie(k) {
+	setCookie(k, '', -10)
+}
+
+function getUrlParam(name) {
+	// 取得url中?后面的字符
+	var query = window.location.search.substring(1);
+	// 把参数按&拆分成数组
+	var param_arr = query.split("&");
+	for (var i = 0; i < param_arr.length; i++) {
+		var pair = param_arr[i].split("=");
+		if (pair[0] == name) {
+			return pair[1];
+		}
+	}
+	return (false);
 }
