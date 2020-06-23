@@ -48,9 +48,7 @@ let base = {
         return data.slice(start, end)
     },
     //获取时间
-    GetTime(type, type1) {
-        type = type || 'date'
-        type1 = type1 || '1'
+    GetTime() {
         var year = new Date().getFullYear()
         var month = new Date().getMonth() + 1
         var date = new Date().getDate()
@@ -66,15 +64,31 @@ let base = {
         let mon = `${year}-${month}`
         let hour = `${year}-${month}-${date}-${h}`
         let min = `${year}年${month}月${date}号${h}点${m}分`
-        if (type == 'month') {
+        function getMonth() {
             return mon
-        } else if (type == 'date') {
+        }
+        function getDate() {
             return day
-        } else if (type == 'hour') {
+        }
+        function getHour() {
             return hour
-        } else if (type == 'min') {
+        }
+        function getMin() {
             return min
         }
+        return {
+            getMonth,
+            getDate,
+            getHour,
+            getMin
+        }
+    },
+    month() {
+        let arr = [];
+        for (let i = 1; i <= 12; i++) {
+            arr.push(i + "月");
+        }
+        return arr;
     },
     //对象转数组
     Obj_arr(obj) {
@@ -128,16 +142,57 @@ let base = {
     // 按某个属性值 去重数组对象
     replace(arr1, name) {
         let arr = arr1
-        for (let i = 0; i < arr.length; i++) {
-            let s = arr[i].name.replace(/\s/g, "");
-            for (let j = i + 1; j < arr.length - i; j++) {
-                let e = arr[j].name.trim(/\s/, "");
-                if (s == e) {
-                    arr.splice(j, 1);
+        for (i = 0; i < arr.length; i++) {
+            for (j = i + 1; j < arr.length; j++) {
+                if (arr[i][name] == arr[j][name]) {
+                    arr.splice(j, 1)
+                    j--
                 }
             }
         }
         return arr
+    },
+    deepClone(obj, parent = null) {
+        let result; // 最后的返回结果
+
+        let _parent = parent; // 防止循环引用
+        while (_parent) {
+            if (_parent.originalParent === obj) {
+                return _parent.currentParent;
+            }
+            _parent = _parent.parent;
+        }
+
+        if (obj && typeof obj === "object") { // 返回引用数据类型(null已被判断条件排除))
+            if (obj instanceof RegExp) { // RegExp类型
+                result = new RegExp(obj.source, obj.flags)
+            } else if (obj instanceof Date) { // Date类型
+                result = new Date(obj.getTime());
+            } else {
+                if (obj instanceof Array) { // Array类型
+                    result = []
+                } else { // Object类型，继承原型链
+                    let proto = Object.getPrototypeOf(obj);
+                    result = Object.create(proto);
+                }
+                for (let key in obj) { // Array类型 与 Object类型 的深拷贝
+                    if (obj.hasOwnProperty(key)) {
+                        if (obj[key] && typeof obj[key] === "object") {
+                            result[key] = deepClone(obj[key], {
+                                originalParent: obj,
+                                currentParent: result,
+                                parent: parent
+                            });
+                        } else {
+                            result[key] = obj[key];
+                        }
+                    }
+                }
+            }
+        } else { // 返回基本数据类型与Function类型,因为Function不需要深拷贝
+            return obj
+        }
+        return result;
     }
 }
 export default base
