@@ -18,5 +18,8 @@ Vue.prototype.login_js = login_js
 import echarts from './echarts'
 Vue.prototype.$ech = echarts
 
+import fun from './fun'
+Vue.prototype.$cookie = fun
+
 
 export { map, filter, instruction }

@@ -54,3 +54,4 @@ function getUrlParam(name) {
 	}
 	return (false);
 }
+export {parseCookies,setCookie,getCookie,removeCookie,getUrlParam}

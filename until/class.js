@@ -1,10 +1,6 @@
 //错误提示
 class Failtip {
     constructor(obj) {
-<<<<<<< HEAD
-=======
-        console.log('调用对象');
->>>>>>> ca52cbdda66ea835d177c8fc82a06dfb749b3536
         var body = document.querySelector('body')
         let wrap = document.createElement('div')
         wrap.id = 'fail_tip'
