@@ -199,6 +199,113 @@ const echarts = {
             option.yAxis.max = 10
         }
         obj.dom.setOption(option);
+    },
+    getGeo(zoom, arr) {
+        arr = arr || [120.55027, 30.67386]
+        zoom = zoom || 8
+        return {
+            map: "china",
+            zoom: zoom,
+            center: arr,
+            label: {
+                normal: {
+                    show: true,
+                    color: "#fff"
+                },
+                emphasis: {
+                    show: false
+                }
+            },
+            roam: true,
+            itemStyle: {
+                normal: {
+                    // color: "rgba(51, 69, 89, .5)", //地图背景色
+                    borderColor: 'rgba(147, 235, 248, 1)',
+                    borderWidth: 1,
+                    areaColor: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.8,
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(147, 235, 248, .1)' // 0% 处的颜色
+                        }, {
+                            offset: 1,
+                            color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                        }],
+                        globalCoord: false // 缺省为 false
+                    },
+                    shadowColor: 'rgba(128, 217, 248, 1)',
+                    // shadowColor: 'rgba(255, 255, 255, 1)',
+                    shadowOffsetX: -2,
+                    shadowOffsetY: 2,
+                    shadowBlur: 10
+                },
+                emphasis: {
+                    color: "rgba(37, 43, 61, .5)" //悬浮背景
+                }
+            }
+        }
+    },
+    getLegend(arr) {
+        return {
+            show: true,
+            orient: "vertical",
+            top: "bottom",
+            left: "left",
+            itemWidth: 90,
+            itemHeight: 30,
+            data: arr,
+            textStyle: {
+                color: "#fff",
+                fontSize: 18
+            }
+        }
+    },
+    getColor() {
+        return ["#f44336", "#fc9700", "#ffde00", "#ffde00", "#00eaff"]
+    },
+    getCenter(arr) {
+        arr = arr || [{
+            name: '宁波市',
+            value: [121.624618, 29.860363]
+        }]
+        return {
+            name: "地点",
+            type: "effectScatter",
+            coordinateSystem: "geo",
+            zlevel: 100,
+            rippleEffect: {
+                brushType: "stroke"
+            },
+            label: {
+                normal: {
+                    show: false,
+                    position: "right", //显示位置
+                    offset: [5, 0], //偏移设置
+                    formatter: function (params) {
+                        //圆环显示文字
+                        return params.data.name;
+                    },
+                    fontSize: 20,
+                    color: '#fff',
+                },
+                emphasis: {
+                    show: true,
+                    position: "right",
+                    formatter: "{b}"
+                }
+            },
+            symbolSize: 30,
+            showEffectOn: "render",
+            itemStyle: {
+                normal: {
+                    color: "#46bee9"
+                }
+            },
+            data: arr
+        }
     }
 }
 export default echarts

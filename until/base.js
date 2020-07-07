@@ -64,6 +64,7 @@ let base = {
         let mon = `${year}-${month}`
         let hour = `${year}-${month}-${date}-${h}`
         let min = `${year}年${month}月${date}号${h}点${m}分`
+        let sec = `${year}年${month}月${date}号${h}点${m}分${s}`
         function getMonth() {
             return mon
         }
@@ -76,11 +77,15 @@ let base = {
         function getMin() {
             return min
         }
+        function getSec() {
+            return sec
+        }
         return {
             getMonth,
             getDate,
             getHour,
-            getMin
+            getMin,
+            getSec
         }
     },
     month() {
@@ -142,8 +147,8 @@ let base = {
     // 按某个属性值 去重数组对象
     replace(arr1, name) {
         let arr = arr1
-        for (i = 0; i < arr.length; i++) {
-            for (j = i + 1; j < arr.length; j++) {
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = i + 1; j < arr.length; j++) {
                 if (arr[i][name] == arr[j][name]) {
                     arr.splice(j, 1)
                     j--
